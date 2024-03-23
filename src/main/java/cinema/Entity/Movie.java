@@ -48,6 +48,8 @@ public class Movie {
     private String trailer;
     @Column(name = "IsActive")
     private boolean isActive;
+    @Column(name = "TicketSoldQuantity")
+    private int ticketSoldQuantity;
 
     @ManyToOne
     @JoinColumn(name = "RateId")
