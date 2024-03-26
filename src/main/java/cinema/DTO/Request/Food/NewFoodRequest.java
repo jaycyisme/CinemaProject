@@ -1,4 +1,4 @@
-package cinema.DTO.Request;
+package cinema.DTO.Request.Food;
 
 import lombok.*;
 
@@ -7,8 +7,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class RemakeFoodRequest {
-    private Integer foodId;
+public class NewFoodRequest {
     private Double price;
     private String description;
     private String image;

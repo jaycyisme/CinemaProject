@@ -7,6 +7,6 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class DeleteRoomRequest {
-    private Integer roomId;
+public class ScheduleRequest {
+    private Integer scheduleId;
 }

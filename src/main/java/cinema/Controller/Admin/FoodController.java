@@ -1,6 +1,8 @@
 package cinema.Controller.Admin;
 
-import cinema.DTO.Request.*;
+import cinema.DTO.Request.Food.DeleteFoodRequest;
+import cinema.DTO.Request.Food.NewFoodRequest;
+import cinema.DTO.Request.Food.RemakeFoodRequest;
 import cinema.DTO.Response.MessageResponse;
 import cinema.Service.ServiceImpl.FoodServicesImpl;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package cinema.DTO.Request;
+package cinema.DTO.Request.Movie;
 
 import lombok.*;
 

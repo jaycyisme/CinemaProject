@@ -1,8 +1,8 @@
 package cinema.Service;
 
-import cinema.DTO.Request.DeleteFoodRequest;
-import cinema.DTO.Request.NewFoodRequest;
-import cinema.DTO.Request.RemakeFoodRequest;
+import cinema.DTO.Request.Food.DeleteFoodRequest;
+import cinema.DTO.Request.Food.NewFoodRequest;
+import cinema.DTO.Request.Food.RemakeFoodRequest;
 import cinema.DTO.Response.MessageResponse;
 
 public interface IFoodSevices {

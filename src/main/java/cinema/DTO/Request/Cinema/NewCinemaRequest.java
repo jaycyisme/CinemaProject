@@ -1,4 +1,4 @@
-package cinema.DTO.Request;
+package cinema.DTO.Request.Cinema;
 
 import lombok.*;
 
@@ -7,8 +7,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class RemakeCinemaRequest {
-    private Integer cinemaId;
+public class NewCinemaRequest {
     private String address;
     private String description;
     private String code;

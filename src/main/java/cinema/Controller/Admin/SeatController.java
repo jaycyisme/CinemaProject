@@ -1,6 +1,8 @@
 package cinema.Controller.Admin;
 
-import cinema.DTO.Request.*;
+import cinema.DTO.Request.Seat.DeleteSeatRequest;
+import cinema.DTO.Request.Seat.NewSeatRequest;
+import cinema.DTO.Request.Seat.RemakeSeatRequest;
 import cinema.DTO.Response.MessageResponse;
 import cinema.Service.ServiceImpl.SeatServicesImpl;
 import lombok.RequiredArgsConstructor;

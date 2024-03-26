@@ -1,4 +1,4 @@
-package cinema.DTO.Request;
+package cinema.DTO.Request.Movie;
 
 import lombok.*;
 
@@ -9,8 +9,7 @@ import java.util.Date;
 @Builder
 @Getter
 @Setter
-public class RemakeMovieRequest {
-    private Integer movieId;
+public class NewMovieRequest {
     private Integer movieDuration;
     private Date endTime;
     private Date premiereDate;

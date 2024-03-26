@@ -1,4 +1,4 @@
-package cinema.DTO.Request;
+package cinema.DTO.Request.Room;
 
 import lombok.*;
 
@@ -7,7 +7,8 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class NewRoomRequest {
+public class RemakeRoomRequest {
+    private Integer roomId;
     private Integer capacity;
     private Integer type;
     private String description;

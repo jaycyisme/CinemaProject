@@ -32,8 +32,7 @@ public class AuthenticationService {
 
     private final RefreshTokenRepo refreshTokenRepo;
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     private final Map<String, Integer> authenticationCode = new HashMap<>();
 
@@ -154,6 +153,8 @@ public class AuthenticationService {
                 user.setUserStatus(userStatus);
             }
         }
+
+        user.setRoleEnums(RoleEnums.USER);
 
         userRepo.save(user);
         return MessageResponse.builder().message("Successful Registration").build();

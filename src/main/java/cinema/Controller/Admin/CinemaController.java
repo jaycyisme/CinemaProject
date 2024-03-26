@@ -1,9 +1,8 @@
 package cinema.Controller.Admin;
 
-import cinema.DTO.Request.DeleteCinemaRequest;
-import cinema.DTO.Request.DeleteMovieRequest;
-import cinema.DTO.Request.NewCinemaRequest;
-import cinema.DTO.Request.RemakeCinemaRequest;
+import cinema.DTO.Request.Cinema.DeleteCinemaRequest;
+import cinema.DTO.Request.Cinema.NewCinemaRequest;
+import cinema.DTO.Request.Cinema.RemakeCinemaRequest;
 import cinema.DTO.Response.MessageResponse;
 import cinema.Service.ServiceImpl.CinemaServicesImpl;
 import lombok.RequiredArgsConstructor;

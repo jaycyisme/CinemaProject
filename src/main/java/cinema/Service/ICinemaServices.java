@@ -1,8 +1,8 @@
 package cinema.Service;
 
-import cinema.DTO.Request.DeleteCinemaRequest;
-import cinema.DTO.Request.NewCinemaRequest;
-import cinema.DTO.Request.RemakeCinemaRequest;
+import cinema.DTO.Request.Cinema.DeleteCinemaRequest;
+import cinema.DTO.Request.Cinema.NewCinemaRequest;
+import cinema.DTO.Request.Cinema.RemakeCinemaRequest;
 import cinema.DTO.Response.MessageResponse;
 
 public interface ICinemaServices {

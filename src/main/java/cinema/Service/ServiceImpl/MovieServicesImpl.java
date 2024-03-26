@@ -1,13 +1,15 @@
 package cinema.Service.ServiceImpl;
 
-import cinema.DTO.Request.DeleteMovieRequest;
-import cinema.DTO.Request.NewMovieRequest;
-import cinema.DTO.Request.RemakeMovieRequest;
+import cinema.Config.ApplicationConfig;
+import cinema.DTO.Request.Movie.DeleteMovieRequest;
+import cinema.DTO.Request.Movie.NewMovieRequest;
+import cinema.DTO.Request.Movie.RemakeMovieRequest;
 import cinema.DTO.Response.MessageResponse;
 import cinema.Entity.*;
 import cinema.Repository.*;
 import cinema.Service.IMovieServices;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,6 +29,8 @@ public class MovieServicesImpl implements IMovieServices {
     private final TicketRepo ticketRepo;
 
     private final BillTicketRepo billTicketRepo;
+
+    private final ApplicationConfig config;
 
 
     @Override
@@ -113,6 +117,8 @@ public class MovieServicesImpl implements IMovieServices {
         }
 
         Movie movie = movieOptional.get();
+
+
         movie.setMovieDuration(request.getMovieDuration());
         movie.setEndTime(request.getEndTime());
         movie.setPremiereDate(request.getPremiereDate());
@@ -137,6 +143,9 @@ public class MovieServicesImpl implements IMovieServices {
         movie.setTrailer(request.getTrailer());
         movie.setActive(request.getIsActive());
         movie.setTicketSoldQuantity(request.getTicketSoldedQuantity());
+
+        BeanUtils.copyProperties(request, movie, config.getNullPropertyNames(request));
+
         movieRepo.save(movie);
 
         return MessageResponse.builder().message("Remake Movie Success").build();

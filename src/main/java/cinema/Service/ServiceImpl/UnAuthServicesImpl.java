@@ -1,8 +1,6 @@
 package cinema.Service.ServiceImpl;
 
-import cinema.DTO.Request.GetMovieByCinemaAndRoomRequest;
-import cinema.DTO.Request.GetMovieByCinemaRequest;
-import cinema.DTO.Request.GetSeatRequest;
+import cinema.DTO.Request.*;
 import cinema.DTO.Response.ListMovieReponse;
 import cinema.DTO.Response.ListSeatResponse;
 import cinema.Repository.*;
@@ -75,5 +73,19 @@ public class UnAuthServicesImpl implements IUnAuthServices {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         Page<ListSeatResponse> seatPage = seatRepo.findAllSeatByCinemaAndRoom(request.getCinemaId(), request.getRoomId(), pageable);
         return seatPage.getContent();
+    }
+
+    @Override
+    public List<String> listScheduleByMovie(GetScheduleByMovieRequest request, Integer pageNumber, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        List<String> schedulePage = scheduleRepo.findDistinctDayMonthYearByMovieId(request.getMovieId(), pageable);
+        return schedulePage;
+    }
+
+    @Override
+    public List<String> listScheduleTimeByMovieAndDate(GetScheduleTimeByMovieAndDateRequest request, Integer pageNumber, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        List<String> scheduleTimePage = scheduleRepo.findScheduleTimeByMovieAndDate(request.getMovieId(), request.getDate(), pageable);
+        return scheduleTimePage;
     }
 }

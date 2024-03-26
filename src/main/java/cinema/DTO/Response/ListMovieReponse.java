@@ -25,6 +25,6 @@ public class ListMovieReponse {
     private String name;
     private Integer rateId;
     private String trailer;
-    private boolean isActive;
-    private int ticketSoldQuantity;
+    private Boolean isActive;
+    private Integer ticketSoldQuantity;
 }

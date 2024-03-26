@@ -1,22 +1,15 @@
 package cinema.Service.ServiceImpl;
 
 import cinema.DTO.Request.GetUserRequest;
-import cinema.DTO.Request.NewMovieRequest;
 import cinema.DTO.Response.GetAllUserResponse;
 import cinema.DTO.Response.GetUserResponse;
-import cinema.DTO.Response.MessageResponse;
 import cinema.Entity.User;
 import cinema.Repository.UserRepo;
 import cinema.Service.IAdminServices;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

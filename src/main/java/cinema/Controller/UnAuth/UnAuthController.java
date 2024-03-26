@@ -1,8 +1,6 @@
 package cinema.Controller.UnAuth;
 
-import cinema.DTO.Request.GetMovieByCinemaAndRoomRequest;
-import cinema.DTO.Request.GetMovieByCinemaRequest;
-import cinema.DTO.Request.GetSeatRequest;
+import cinema.DTO.Request.*;
 import cinema.DTO.Response.ListMovieReponse;
 import cinema.DTO.Response.ListSeatResponse;
 import cinema.Service.ServiceImpl.UnAuthServicesImpl;
@@ -52,4 +50,23 @@ public class UnAuthController {
     ){
         return new ResponseEntity<>(unAuthServices.listSeatByCinemaAndRoom(request, pageNumber, pageSize), HttpStatus.OK);
     }
+
+    @GetMapping("/displayschedulebymovie")
+    public ResponseEntity<List<String>> listSchedule (
+            @RequestBody GetScheduleByMovieRequest request,
+            @RequestParam(name = "pageNumber", defaultValue = "0") Integer pageNumber,
+            @RequestParam(name = "pageSize", defaultValue = "9") Integer pageSize
+    ) {
+        return new ResponseEntity<>(unAuthServices.listScheduleByMovie(request, pageNumber, pageSize), HttpStatus.OK);
+    }
+
+    @GetMapping("/displayscheduletimebymovieanddate")
+    public ResponseEntity<List<String>> listSchedule (
+            @RequestBody GetScheduleTimeByMovieAndDateRequest request,
+            @RequestParam(name = "pageNumber", defaultValue = "0") Integer pageNumber,
+            @RequestParam(name = "pageSize", defaultValue = "9") Integer pageSize
+    ) {
+        return new ResponseEntity<>(unAuthServices.listScheduleTimeByMovieAndDate(request, pageNumber, pageSize), HttpStatus.OK);
+    }
+
 }

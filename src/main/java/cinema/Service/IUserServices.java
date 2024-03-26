@@ -1,11 +1,17 @@
 package cinema.Service;
 
 import cinema.DTO.Request.ChangePasswordRequest;
-import cinema.DTO.Response.ListMovieReponse;
+import cinema.DTO.Request.ScheduleRequest;
+import cinema.DTO.Response.GetMovieScheduleResponse;
+import cinema.DTO.Response.GetSeatByScheduleResponse;
 import cinema.DTO.Response.MessageResponse;
-
-import java.util.List;
 
 public interface IUserServices {
     public MessageResponse changePassword(ChangePasswordRequest request);
+
+    public GetMovieScheduleResponse getMovieScheduleInfor(ScheduleRequest request);
+
+    public GetSeatByScheduleResponse getSeatBySchedule(ScheduleRequest request);
+
+    public MessageResponse createBill();
 }

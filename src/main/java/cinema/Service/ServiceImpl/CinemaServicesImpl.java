@@ -1,8 +1,8 @@
 package cinema.Service.ServiceImpl;
 
-import cinema.DTO.Request.DeleteCinemaRequest;
-import cinema.DTO.Request.NewCinemaRequest;
-import cinema.DTO.Request.RemakeCinemaRequest;
+import cinema.DTO.Request.Cinema.DeleteCinemaRequest;
+import cinema.DTO.Request.Cinema.NewCinemaRequest;
+import cinema.DTO.Request.Cinema.RemakeCinemaRequest;
 import cinema.DTO.Response.MessageResponse;
 import cinema.Entity.*;
 import cinema.Repository.*;
