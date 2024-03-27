@@ -1,6 +1,7 @@
 package cinema.Repository;
 
 import cinema.DTO.Response.GetMovieScheduleResponse;
+import cinema.Entity.Room;
 import cinema.Entity.Schedule;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -34,5 +35,7 @@ public interface ScheduleRepo extends JpaRepository<Schedule, Integer> {
             "JOIN MovieType mt ON m.movieTypeId = mt.id WHERE s.movieId = :movieId")
     GetMovieScheduleResponse getMovieScheduleBySchedule(@Param("movieId") Integer movieId);
 
+
+    List<Schedule> findAllByRoom(Room room);
 }
 

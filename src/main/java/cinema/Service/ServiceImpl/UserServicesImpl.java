@@ -129,14 +129,6 @@ public class UserServicesImpl implements IUserServices {
     }
 
 
-    //TODO tạo ticket với scheduleID và seatID
-    //TODO cập nhật PriceTicket trong ticket
-    //TODO cập nhật bill ticket
-    //TODO cập nhật giá bill
-    //TODO xóa seat thì cập nhật lại giá
-    //TODO cập nhật quantity trong Bill sau mỗi lần chọn seat
-
-
     @Override
     public MessageResponse createBillTicket(CreateTicketRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -148,20 +140,30 @@ public class UserServicesImpl implements IUserServices {
 
         Schedule schedule = scheduleRepo.findById(request.getScheduleId()).orElseThrow(() -> new RuntimeException("Schedule not found"));
         Seat seat = seatRepo.findById(request.getSeatId()).orElseThrow(() -> new RuntimeException("Seat not found"));
-        Bill bill = billRepo.findByUser(user);
+        Bill bill = billRepo.findByUserAndBillStatusId(user, 1);
+
+        if (bill == null) {
+            return MessageResponse.builder().message("Bill not found").build();
+        }
 
         if (bill.getBillStatusId() == 2) {
             return MessageResponse.builder().message("Please Create New Bill").build();
         }
 
-        if (seat.getSeatStatusId() == 1) {
+        if (seat.isActive() == false) {
             return MessageResponse.builder().message("Seat is not available").build();
         }
+
 
         Ticket ticket = new Ticket();
         ticket.setCode(generateCode());
         ticket.setSchedule(schedule);
+
+
+        seat.setActive(false);
         ticket.setSeat(seat);
+        seatRepo.save(seat);
+
         if(seat.getSeatType().getId() == 1){
             ticket.setPriceTicket(schedule.getPrice());
         } else if (seat.getSeatType().getId() == 2) {
@@ -169,9 +171,6 @@ public class UserServicesImpl implements IUserServices {
         }
         ticket.setActive(true);
         ticketRepo.save(ticket);
-
-        seat.setSeatStatusId(1);
-        seatRepo.save(seat);
 
         BillTicket billTicket = new BillTicket();
         billTicket.setQuantity(0);
@@ -182,6 +181,7 @@ public class UserServicesImpl implements IUserServices {
         double billTicketPrice = ticket.getPriceTicket();
         bill.setTotalMoney(bill.getTotalMoney() + billTicketPrice);
         billRepo.save(bill);
+
         return MessageResponse.builder().message(String.valueOf(bill.getTotalMoney())).build();
     }
 
@@ -209,7 +209,7 @@ public class UserServicesImpl implements IUserServices {
         billRepo.save(bill);
 
         Seat seat = seatRepo.findById(ticket.getSeatId()).get();
-        seat.setSeatStatusId(2);
+        seat.setActive(true);
         seatRepo.save(seat);
 
         return MessageResponse.builder().message("Cancel Succesfull").build();
@@ -226,7 +226,7 @@ public class UserServicesImpl implements IUserServices {
         User user = userRepo.findByUsername(loggedInUsername).orElseThrow(() -> new RuntimeException("User not found"));
 
         Food food = foodRepo.findById(foodId).orElseThrow(() -> new RuntimeException("Food not found"));
-        Bill bill = billRepo.findByUser(user);
+        Bill bill = billRepo.findByUserAndBillStatusId(user, 1);
 
         BillFood billFood = new BillFood();
         billFood.setQuantity(0);

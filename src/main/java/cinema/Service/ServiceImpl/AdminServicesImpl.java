@@ -4,9 +4,10 @@ import cinema.DTO.Request.GetUserRequest;
 import cinema.DTO.Response.GetAllUserResponse;
 import cinema.DTO.Response.GetUserResponse;
 import cinema.Entity.User;
-import cinema.Repository.UserRepo;
+import cinema.Repository.*;
 import cinema.Service.IAdminServices;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,20 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AdminServicesImpl implements IAdminServices {
     private final UserRepo userRepo;
+
+    private final CinemaRepo cinemaRepo;
+
+    private final RoomRepo roomRepo;
+
+    private final SeatRepo seatRepo;
+
+    private final ScheduleRepo scheduleRepo;
+
+    private final TicketRepo ticketRepo;
+
+    private final BillTicketRepo billTicketRepo;
+
+    private final BillRepo billRepo;
 
     @Override
     public List<GetAllUserResponse> getAllUser(Integer pageNumber, Integer pageSize) {

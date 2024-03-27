@@ -80,7 +80,7 @@ public class VNPayServices {
 
         int discount = promotion.getPercent();
 
-        Bill bill = billRepo.findByUser(user);
+        Bill bill = billRepo.findByUserAndBillStatusId(user, 1);
         long amount = (long) ((bill.getTotalMoney()-(bill.getTotalMoney()*discount/100))*100);
 
         String vnp_Version = "2.1.0";
@@ -156,21 +156,38 @@ public class VNPayServices {
         String room = "";
         String cinema = "";
 
-        BillTicket billTicket = billTicketRepo.findByBill(bill);
-
-        if (billTicket != null) {
-            Ticket ticket = billTicket.getTicket();
-            Schedule ticketSchedule = ticket.getSchedule();
-            Movie ticketMovie = ticketSchedule.getMovie();
-            Room ticketRoom = ticketSchedule.getRoom();
-            Cinema ticketCinema = ticketRoom.getCinema();
-            Seat ticketSeat = ticket.getSeat();
-
-            movieName = ticketMovie.getName();
-            seatName = ticketSeat.getNumber() + " - " + ticketSeat.getLine();
-            schedule = ticketSchedule.getStartAt().toString();
-            room = ticketRoom.getName();
-            cinema = ticketCinema.getNameOfCinema();
+        for (BillTicket billTicket : billTicketRepo.findAll()) {
+            if (billTicket.getBill().equals(bill)) {
+                for (Ticket ticket : ticketRepo.findAll()) {
+                    if (billTicket.getTicket().equals(ticket)) {
+                        for (Schedule existschedule : scheduleRepo.findAll()) {
+                            if (ticket.getSchedule().equals(existschedule)) {
+                                for (Movie movie : movieRepo.findAll()) {
+                                    if (existschedule.getMovie().equals(movie)) {
+                                        movieName = movie.getName();
+                                    }
+                                }
+                                schedule = existschedule.getStartAt().toString();
+                                for (Room existRoom : roomRepo.findAll()) {
+                                    if (existschedule.getRoom().equals(room)) {
+                                        room = existRoom.getName();
+                                        for (Cinema existCinema : cinemaRepo.findAll()) {
+                                            if (existRoom.getCinema().equals(cinema)) {
+                                                cinema = existCinema.getNameOfCinema();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        for (Seat seat : seatRepo.findAll()) {
+                            if (ticket.getSeat().equals(seat)) {
+                                seatName = seat.getNumber() + " - " + seat.getLine();
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         String emailContent = "Dear Customer,\n\n" +
@@ -187,6 +204,26 @@ public class VNPayServices {
 
         authenticationEmail(user.getEmail(), "Payment Successful", emailContent);
 
+
+//        for (BillTicket existBillTicket : bill.getBillTickets()) {
+//            for (Ticket existTicket : ticketRepo.findAll()) {
+//                if (existBillTicket.getTicket().equals(existTicket)) {
+//                    for (Seat existSeat : seatRepo.findAll()) {
+//                        if (existTicket.getSeat().equals(existSeat)) {
+//                            existSeat.setSeatStatusId(1);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+
+//        Set<BillTicket> billTickets = bill.getBillTickets(); // Lấy tất cả các BillTicket của hóa đơn
+//        for (BillTicket existBillTicket : billTickets) {
+//            Ticket existTicket = existBillTicket.getTicket(); // Lấy vé từ BillTicket
+//            Seat existSeat = existTicket.getSeat(); // Lấy ghế từ vé
+//            existSeat.setSeatStatusId(1); // Cập nhật trạng thái ghế
+//            seatRepo.save(existSeat); // Lưu thay đổi vào cơ sở dữ liệu
+//        }
 
         return paymentUrl;
     }

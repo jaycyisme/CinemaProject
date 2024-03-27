@@ -137,46 +137,46 @@ INSERT INTO User (Email, IsActive, Name, Password, PhoneNumber, Point, UserName,
 VALUES ('quoctuanisme0610@gmail.com@gmail.com', true, 'ADMIN', '$2a$12$RdvIn6k3e.T8zL6LB7Y78OP9w5YMwaNKkgcV76AEAzmm4cHaMFC3G', '0912004597', 40, 'admin', 2, 1, 2, 'ADMIN');
 
 
-INSERT INTO Bill (CreateTime, IsActive, Name, TotalMoney, TradingCode, UpdateTime, BillStatusId, PromotionId,
-                  CustomerId)
-VALUES ('2024-03-24 18:05:13', true, 'Bill Tran Anh', 148500, 'BTA-2403', '2024-03-24 18:08:13', 2, 2, 1);
-INSERT INTO Bill (CreateTime, IsActive, Name, TotalMoney, TradingCode, UpdateTime, BillStatusId, PromotionId,
-                  CustomerId)
-VALUES ('2024-03-24 17:03:31', true, 'Bill Quoc Anh', 255000, 'QTA-2403', '2024-03-24 17:08:53', 2, 3, 1);
-INSERT INTO Bill (CreateTime, IsActive, Name, TotalMoney, TradingCode, UpdateTime, BillStatusId, PromotionId,
-                  CustomerId)
-VALUES ('2024-03-26 15:08:02', true, 'Bill Tran Anh', 108000, 'BTA-2603', '2024-03-26 15:11:19', 2, 2, 1);
-INSERT INTO Bill (CreateTime, IsActive, Name, TotalMoney, TradingCode, UpdateTime, BillStatusId, PromotionId,
-                  CustomerId)
-VALUES ('2024-03-26 15:08:02', true, 'Bill Van Lam', 216000, 'BVL-2603', '2024-03-26 15:11:19', 2, 2, 3);
-
-INSERT INTO BillFood (Quantity, BillId, FoodId)
-VALUES (1, 1, 3);
-INSERT INTO BillFood (Quantity, BillId, FoodId)
-VALUES (1, 1, 4);
-INSERT INTO BillFood (Quantity, BillId, FoodId)
-VALUES (1, 2, 2);
-INSERT INTO BillFood (Quantity, BillId, FoodId)
-VALUES (2, 2, 3);
-INSERT INTO BillFood (Quantity, BillId, FoodId)
-VALUES (2, 2, 1);
-
-INSERT INTO Ticket (Code, IsActive, PriceTicket, ScheduleId, SeatId)
-VALUES ('NTC-1', true, 60000, 2, 1);
-INSERT INTO Ticket (Code, IsActive, PriceTicket, ScheduleId, SeatId)
-VALUES ('LLC-1', true, 60000, 3, 2);
-INSERT INTO Ticket (Code, IsActive, PriceTicket, ScheduleId, SeatId)
-VALUES ('QTC-1', true, 60000, 6, 3);
-INSERT INTO Ticket (Code, IsActive, PriceTicket, ScheduleId, SeatId)
-VALUES ('NTC-1', true, 60000, 1, 1);
-
-INSERT INTO BillTicket (Quantity, BillId, TicketId)
-VALUES (2, 1, 1);
-INSERT INTO BillTicket (Quantity, BillId, TicketId)
-VALUES (3, 2, 2);
-INSERT INTO BillTicket (Quantity, BillId, TicketId)
-VALUES (2, 3, 3);
-INSERT INTO BillTicket (Quantity, BillId, TicketId)
-VALUES (4, 4, 4);
+# INSERT INTO Bill (CreateTime, IsActive, Name, TotalMoney, TradingCode, UpdateTime, BillStatusId, PromotionId,
+#                   CustomerId)
+# VALUES ('2024-03-24 18:05:13', true, 'Bill Tran Anh', 148500, 'BTA-2403', '2024-03-24 18:08:13', 2, 2, 1);
+# INSERT INTO Bill (CreateTime, IsActive, Name, TotalMoney, TradingCode, UpdateTime, BillStatusId, PromotionId,
+#                   CustomerId)
+# VALUES ('2024-03-24 17:03:31', true, 'Bill Quoc Anh', 255000, 'QTA-2403', '2024-03-24 17:08:53', 2, 3, 1);
+# INSERT INTO Bill (CreateTime, IsActive, Name, TotalMoney, TradingCode, UpdateTime, BillStatusId, PromotionId,
+#                   CustomerId)
+# VALUES ('2024-03-26 15:08:02', true, 'Bill Tran Anh', 108000, 'BTA-2603', '2024-03-26 15:11:19', 2, 2, 1);
+# INSERT INTO Bill (CreateTime, IsActive, Name, TotalMoney, TradingCode, UpdateTime, BillStatusId, PromotionId,
+#                   CustomerId)
+# VALUES ('2024-03-26 15:08:02', true, 'Bill Van Lam', 216000, 'BVL-2603', '2024-03-26 15:11:19', 2, 2, 3);
+#
+# INSERT INTO BillFood (Quantity, BillId, FoodId)
+# VALUES (1, 1, 3);
+# INSERT INTO BillFood (Quantity, BillId, FoodId)
+# VALUES (1, 1, 4);
+# INSERT INTO BillFood (Quantity, BillId, FoodId)
+# VALUES (1, 2, 2);
+# INSERT INTO BillFood (Quantity, BillId, FoodId)
+# VALUES (2, 2, 3);
+# INSERT INTO BillFood (Quantity, BillId, FoodId)
+# VALUES (2, 2, 1);
+#
+# INSERT INTO Ticket (Code, IsActive, PriceTicket, ScheduleId, SeatId)
+# VALUES ('NTC-1', true, 60000, 2, 1);
+# INSERT INTO Ticket (Code, IsActive, PriceTicket, ScheduleId, SeatId)
+# VALUES ('LLC-1', true, 60000, 3, 2);
+# INSERT INTO Ticket (Code, IsActive, PriceTicket, ScheduleId, SeatId)
+# VALUES ('QTC-1', true, 60000, 6, 3);
+# INSERT INTO Ticket (Code, IsActive, PriceTicket, ScheduleId, SeatId)
+# VALUES ('NTC-1', true, 60000, 1, 1);
+#
+# INSERT INTO BillTicket (Quantity, BillId, TicketId)
+# VALUES (2, 1, 1);
+# INSERT INTO BillTicket (Quantity, BillId, TicketId)
+# VALUES (3, 2, 2);
+# INSERT INTO BillTicket (Quantity, BillId, TicketId)
+# VALUES (2, 3, 3);
+# INSERT INTO BillTicket (Quantity, BillId, TicketId)
+# VALUES (4, 4, 4);
 
 

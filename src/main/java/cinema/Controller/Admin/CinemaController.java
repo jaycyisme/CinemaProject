@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "api/v1/admin")
 @RequiredArgsConstructor
@@ -29,5 +31,11 @@ public class CinemaController {
     @PutMapping("remakecinema")
     public ResponseEntity<MessageResponse> remakeCinema (@RequestBody RemakeCinemaRequest request) {
         return new ResponseEntity<>(cinemaServices.remakeCinema(request), HttpStatus.OK);
+    }
+
+    @GetMapping("/getrevenue")
+    public ResponseEntity<?> getRevenueListByCinema(@RequestParam int cinemaId, int year){
+        List<Object[]> objects = cinemaServices.getRevenueListByCinema(cinemaId,year);
+        return ResponseEntity.ok().body(objects);
     }
 }

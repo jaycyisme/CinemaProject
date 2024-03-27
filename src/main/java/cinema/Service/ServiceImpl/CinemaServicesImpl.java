@@ -10,6 +10,8 @@ import cinema.Service.ICinemaServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,6 +29,8 @@ public class CinemaServicesImpl implements ICinemaServices {
     private final TicketRepo ticketRepo;
 
     private final BillTicketRepo billTicketRepo;
+
+    private final BillRepo billRepo;
 
 
     @Override
@@ -110,5 +114,53 @@ public class CinemaServicesImpl implements ICinemaServices {
 
         cinemaRepo.save(cinema);
         return MessageResponse.builder().message("Remake New Cinema Success").build();
+    }
+
+    @Override
+    public List<Object[]> getRevenueListByCinema(int cinemaId, int year) {
+        Cinema cinema = cinemaRepo.findById(cinemaId).orElse(null);
+        if(cinema == null){
+            return null;
+        }
+
+        //todo lấy tất cả room theo cinema
+        List<Room> rooms = roomRepo.findAllByCinema(cinema);
+        if(rooms.size() < 1){
+            return null;
+        }
+
+        //todo lấy tất cả schedue theo list room của cinema
+        List<Schedule> schedulesByRoom = new ArrayList<>();
+        for (Room room:rooms){
+            List<Schedule> schedules = scheduleRepo.findAllByRoom(room);
+            schedulesByRoom.addAll(schedules);
+        }
+        if(schedulesByRoom.size() < 1){
+            return null;
+        }
+
+        //todo lấy  ticket theo danh sách schedule
+        List<Ticket> ticketsBySchedule = new ArrayList<>();
+        for (Schedule schedule:schedulesByRoom){
+            List<Ticket> tickets = ticketRepo.findAllByScheduleAndCodeNotNullAndPriceTicketGreaterThan(schedule,0);
+            ticketsBySchedule.addAll(tickets);
+        }
+
+        //todo lấy billTicket theo danh sách ticket
+        List<BillTicket> billTicketsByTicket = new ArrayList<>();
+        for (Ticket ticket:ticketsBySchedule){
+            billTicketsByTicket.add(billTicketRepo.findByTicket(ticket));
+        }
+
+        //toto lấy ra danh sách bill theo danh sách billTicket
+        List<Bill> bills = billRepo.findDistinctByBillTicketsIn(billTicketsByTicket);
+
+        List<Integer> billIds = new ArrayList<>();
+        for (Bill bill : bills) {
+            billIds.add(bill.getId());
+        }
+        List<Object[]> objects = billRepo.getMonthlyRevenue(year,billIds);
+
+        return objects;
     }
 }
