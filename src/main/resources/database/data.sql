@@ -130,7 +130,7 @@ VALUES (10, true, 'A', 3, 2, 1);
 INSERT INTO User (Email, IsActive, Name, Password, PhoneNumber, Point, UserName, RankCustomerId, RoleId, UserStatusId, roleEnums)
 VALUES ('20211775@eaut.edu.vn', true, 'Anh', '$2a$12$rvCV5atwDirj9x99mWXJFugT2Ac9jsC/st.9OXs2Lp43fYYV7EzIe', '0912004595', 40, 'user', 2, 3, 2, 'USER');
 INSERT INTO User (Email, IsActive, Name, Password, PhoneNumber, Point, UserName, RankCustomerId, RoleId, UserStatusId, roleEnums)
-VALUES ('anhquoc@gmail.com', true, 'Anh', '$2a$12$vkOSajXAVUBtHVfgt2bQvOhBoYTbVvI52EDsbSrFgTy7Zk8fzsFfK', '0912004596', 60, 'user1', 3, 2, 2, 'USER');
+VALUES ('quoctuanstar0610@gmail.com', true, 'Anh', '$2a$12$vkOSajXAVUBtHVfgt2bQvOhBoYTbVvI52EDsbSrFgTy7Zk8fzsFfK', '0912004596', 60, 'user1', 3, 2, 2, 'USER');
 INSERT INTO User (Email, IsActive, Name, Password, PhoneNumber, Point, UserName, RankCustomerId, RoleId, UserStatusId, roleEnums)
 VALUES ('vanlam@gmail.com', true, 'Lam', '$2a$12$SIEoGIclkU0Fk0E8iNEYW.DiHuEQdIKH/C0NW.i2UWmdMhEiHNLMS', '0912004597', 40, 'user2', 2, 3, 2, 'USER');
 INSERT INTO User (Email, IsActive, Name, Password, PhoneNumber, Point, UserName, RankCustomerId, RoleId, UserStatusId, roleEnums)

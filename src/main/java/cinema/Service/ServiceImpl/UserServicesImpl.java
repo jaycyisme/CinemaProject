@@ -1,13 +1,12 @@
 package cinema.Service.ServiceImpl;
 
 import cinema.DTO.Request.ChangePasswordRequest;
+import cinema.DTO.Request.CreateTicketRequest;
 import cinema.DTO.Request.ScheduleRequest;
 import cinema.DTO.Response.GetMovieScheduleResponse;
 import cinema.DTO.Response.GetSeatByScheduleResponse;
 import cinema.DTO.Response.MessageResponse;
-import cinema.Entity.Bill;
-import cinema.Entity.BillStatus;
-import cinema.Entity.User;
+import cinema.Entity.*;
 import cinema.Repository.*;
 import cinema.Service.IUserServices;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +19,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Random;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +40,14 @@ public class UserServicesImpl implements IUserServices {
     private final BillRepo billRepo;
 
     private final BillStatusRepo billStatusRepo;
+
+    private final BillTicketRepo billTicketRepo;
+
+    private final TicketRepo ticketRepo;
+
+    private final FoodRepo foodRepo;
+
+    private final BillFoodRepo billFoodRepo;
 
 
     private final PasswordEncoder passwordEncoder;
@@ -88,6 +96,19 @@ public class UserServicesImpl implements IUserServices {
         }
         User user = userRepo.findByUsername(loggedInUsername).orElseThrow(() -> new RuntimeException("User not found"));
 
+        Set<Promotion> promotions = user.getRankCustomer().getPromotions();
+        Promotion promotion = promotions.isEmpty() ? null : promotions.iterator().next();
+//        Bill existBill = billRepo.findByUser(user);
+//        if (existBill.getBillStatus().equals(1)) {
+//            return MessageResponse.builder().message("Your bill already exist").build();
+//        }
+
+        Bill existBill = billRepo.findByUserAndBillStatusId(user, 1);
+        if (existBill != null) {
+            return MessageResponse.builder().message("Your bill already exists").build();
+        }
+
+
         Bill bill = new Bill();
         bill.setTotalMoney(0);
         bill.setTradingCode(generateCode());
@@ -100,15 +121,142 @@ public class UserServicesImpl implements IUserServices {
         bill.setUser(user);
         bill.setName("Bill of " + user.getName());
         bill.setUpdateTime(currentDate);
-        bill.setPromotion(null);
+        bill.setPromotion(promotion);
         bill.setBillStatus(billStatusRepo.findById(1).orElse(null));
         bill.setActive(true);
         billRepo.save(bill);
         return MessageResponse.builder().message("Create Bill Success").build();
     }
 
+
     //TODO tạo ticket với scheduleID và seatID
     //TODO cập nhật PriceTicket trong ticket
+    //TODO cập nhật bill ticket
+    //TODO cập nhật giá bill
     //TODO xóa seat thì cập nhật lại giá
     //TODO cập nhật quantity trong Bill sau mỗi lần chọn seat
+
+
+    @Override
+    public MessageResponse createBillTicket(CreateTicketRequest request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUsername = "";
+        if (authentication != null && authentication.isAuthenticated()) {
+            loggedInUsername = authentication.getName();
+        }
+        User user = userRepo.findByUsername(loggedInUsername).orElseThrow(() -> new RuntimeException("User not found"));
+
+        Schedule schedule = scheduleRepo.findById(request.getScheduleId()).orElseThrow(() -> new RuntimeException("Schedule not found"));
+        Seat seat = seatRepo.findById(request.getSeatId()).orElseThrow(() -> new RuntimeException("Seat not found"));
+        Bill bill = billRepo.findByUser(user);
+
+        if (bill.getBillStatusId() == 2) {
+            return MessageResponse.builder().message("Please Create New Bill").build();
+        }
+
+        if (seat.getSeatStatusId() == 1) {
+            return MessageResponse.builder().message("Seat is not available").build();
+        }
+
+        Ticket ticket = new Ticket();
+        ticket.setCode(generateCode());
+        ticket.setSchedule(schedule);
+        ticket.setSeat(seat);
+        if(seat.getSeatType().getId() == 1){
+            ticket.setPriceTicket(schedule.getPrice());
+        } else if (seat.getSeatType().getId() == 2) {
+            ticket.setPriceTicket(schedule.getPrice() * 2);
+        }
+        ticket.setActive(true);
+        ticketRepo.save(ticket);
+
+        seat.setSeatStatusId(1);
+        seatRepo.save(seat);
+
+        BillTicket billTicket = new BillTicket();
+        billTicket.setQuantity(0);
+        billTicket.setBill(bill);
+        billTicket.setTicket(ticket);
+        billTicketRepo.save(billTicket);
+
+        double billTicketPrice = ticket.getPriceTicket();
+        bill.setTotalMoney(bill.getTotalMoney() + billTicketPrice);
+        billRepo.save(bill);
+        return MessageResponse.builder().message(String.valueOf(bill.getTotalMoney())).build();
+    }
+
+
+    @Override
+    public MessageResponse cancelBillTicket(Integer ticketId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUsername = "";
+        if (authentication != null && authentication.isAuthenticated()) {
+            loggedInUsername = authentication.getName();
+        }
+        User user = userRepo.findByUsername(loggedInUsername).orElseThrow(() -> new RuntimeException("User not found"));
+
+        Ticket ticket = ticketRepo.findById(ticketId).orElseThrow(() -> new RuntimeException("Ticket not found"));
+
+        for (BillTicket billTicket : billTicketRepo.findAll()) {
+            if (billTicket.getTicket().equals(ticket)) {
+                billTicketRepo.delete(billTicket);
+            }
+        }
+        ticketRepo.delete(ticket);
+
+        Bill bill = billRepo.findByUser(user);
+        bill.setTotalMoney(bill.getTotalMoney() - ticket.getPriceTicket());
+        billRepo.save(bill);
+
+        Seat seat = seatRepo.findById(ticket.getSeatId()).get();
+        seat.setSeatStatusId(2);
+        seatRepo.save(seat);
+
+        return MessageResponse.builder().message("Cancel Succesfull").build();
+    }
+
+
+    @Override
+    public MessageResponse createBillFood(Integer foodId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUsername = "";
+        if (authentication != null && authentication.isAuthenticated()) {
+            loggedInUsername = authentication.getName();
+        }
+        User user = userRepo.findByUsername(loggedInUsername).orElseThrow(() -> new RuntimeException("User not found"));
+
+        Food food = foodRepo.findById(foodId).orElseThrow(() -> new RuntimeException("Food not found"));
+        Bill bill = billRepo.findByUser(user);
+
+        BillFood billFood = new BillFood();
+        billFood.setQuantity(0);
+        billFood.setBill(bill);
+        billFood.setFood(food);
+        billFoodRepo.save(billFood);
+
+        double billFoodPrice = food.getPrice();
+        bill.setTotalMoney(bill.getTotalMoney() + billFoodPrice);
+        billRepo.save(bill);
+        return MessageResponse.builder().message(String.valueOf(bill.getTotalMoney())).build();
+    }
+
+    @Override
+    public MessageResponse cancelBillFood(Integer billFoodId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUsername = "";
+        if (authentication != null && authentication.isAuthenticated()) {
+            loggedInUsername = authentication.getName();
+        }
+        User user = userRepo.findByUsername(loggedInUsername).orElseThrow(() -> new RuntimeException("User not found"));
+
+        BillFood billFood = billFoodRepo.findById(billFoodId).orElseThrow(() -> new RuntimeException("Bill Food not found"));
+        billFoodRepo.delete(billFood);
+
+        Bill bill = billRepo.findByUser(user);
+        bill.setTotalMoney(bill.getTotalMoney() - billFood.getFood().getPrice());
+        billRepo.save(bill);
+
+        return MessageResponse.builder().message("Cancel Succesfull").build();
+    }
 }
+
