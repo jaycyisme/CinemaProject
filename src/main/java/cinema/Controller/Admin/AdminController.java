@@ -1,8 +1,15 @@
 package cinema.Controller.Admin;
 
-import cinema.DTO.Request.GetUserRequest;
+import cinema.DTO.Request.Cinema.DeleteCinemaRequest;
+import cinema.DTO.Request.Cinema.NewCinemaRequest;
+import cinema.DTO.Request.Cinema.RemakeCinemaRequest;
+import cinema.DTO.Request.User.CreateUserRequest;
+import cinema.DTO.Request.User.DeleteUserRequest;
+import cinema.DTO.Request.User.GetUserRequest;
+import cinema.DTO.Request.User.RemakeUserInformationRequest;
 import cinema.DTO.Response.GetAllUserResponse;
 import cinema.DTO.Response.GetUserResponse;
+import cinema.DTO.Response.MessageResponse;
 import cinema.Service.ServiceImpl.AdminServicesImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,5 +35,20 @@ public class AdminController {
     @GetMapping("getuserbyid")
     public ResponseEntity<GetUserResponse> getUserResponse(@RequestBody GetUserRequest id) {
         return new ResponseEntity<>(adminServices.getUserInformation(id), HttpStatus.OK);
+    }
+
+    @PostMapping("addnewuser")
+    public ResponseEntity<MessageResponse> addNewUser (@RequestBody CreateUserRequest request) {
+        return new ResponseEntity<>(adminServices.addUser(request), HttpStatus.OK);
+    }
+
+    @PutMapping("remakeuser")
+    public ResponseEntity<MessageResponse> remakeUser (@RequestBody RemakeUserInformationRequest request) {
+        return new ResponseEntity<>(adminServices.remakeUser(request), HttpStatus.OK);
+    }
+
+    @DeleteMapping("deleteuser")
+    public ResponseEntity<MessageResponse> deleteUser (@RequestBody DeleteUserRequest request){
+        return new ResponseEntity<>(adminServices.deleteUser(request), HttpStatus.OK);
     }
 }

@@ -79,7 +79,7 @@ public class AuthenticationService {
         user.setPoint(0);
 
         for (Role role : roleRepo.findAll()) {
-            if (role.getName().toLowerCase().equals("user")) {
+            if (role.getName().toLowerCase().equals("role_user")) {
                 user.setRole(role);
             }
         }
@@ -149,7 +149,7 @@ public class AuthenticationService {
 
 //        UserStatus userStatus = userStatusRepo.findById(user.getUserStatusId()).get();
         for (UserStatus userStatus : userStatusRepo.findAll()) {
-            if (userStatus.getName().toLowerCase().equals("no active")) {
+            if (userStatus.getName().toLowerCase().equals("inactive")) {
                 user.setUserStatus(userStatus);
             }
         }

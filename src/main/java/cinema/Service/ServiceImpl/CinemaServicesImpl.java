@@ -123,13 +123,13 @@ public class CinemaServicesImpl implements ICinemaServices {
             return null;
         }
 
-        //todo lấy tất cả room theo cinema
+        //TODO lấy tất cả Room theo Cinema
         List<Room> rooms = roomRepo.findAllByCinema(cinema);
         if(rooms.size() < 1){
             return null;
         }
 
-        //todo lấy tất cả schedue theo list room của cinema
+        //TODO lấy tất cả Schedue theo list Room của Cinema
         List<Schedule> schedulesByRoom = new ArrayList<>();
         for (Room room:rooms){
             List<Schedule> schedules = scheduleRepo.findAllByRoom(room);
@@ -139,20 +139,19 @@ public class CinemaServicesImpl implements ICinemaServices {
             return null;
         }
 
-        //todo lấy  ticket theo danh sách schedule
+        //TODO lấy  Ticket theo danh sách Schedule
         List<Ticket> ticketsBySchedule = new ArrayList<>();
         for (Schedule schedule:schedulesByRoom){
             List<Ticket> tickets = ticketRepo.findAllByScheduleAndCodeNotNullAndPriceTicketGreaterThan(schedule,0);
             ticketsBySchedule.addAll(tickets);
         }
 
-        //todo lấy billTicket theo danh sách ticket
+        //TODO lấy BillTicket theo danh sách ticket
         List<BillTicket> billTicketsByTicket = new ArrayList<>();
         for (Ticket ticket:ticketsBySchedule){
             billTicketsByTicket.add(billTicketRepo.findByTicket(ticket));
         }
 
-        //toto lấy ra danh sách bill theo danh sách billTicket
         List<Bill> bills = billRepo.findDistinctByBillTicketsIn(billTicketsByTicket);
 
         List<Integer> billIds = new ArrayList<>();

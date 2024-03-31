@@ -33,7 +33,8 @@ INSERT INTO Rate (Description, Code)
 VALUES ('3 star', 'Great');
 
 
-
+INSERT INTO RankCustomer (Point, Description, Name, IsActive)
+VALUES (0, 'None Rank', 'None', true);
 INSERT INTO RankCustomer (Point, Description, Name, IsActive)
 VALUES (20, 'Bronze Rank', 'Bronze', true);
 INSERT INTO RankCustomer (Point, Description, Name, IsActive)
