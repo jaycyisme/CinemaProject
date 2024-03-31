@@ -1,0 +1,36 @@
+Họ và tên: Đỗ Quốc Tuấn
+Email: quoctuanisme0610@gmail.com
+SĐT: 0867551656
+Khóa học: Back-end Java
+
+
+Những việc đã làm được:
+
+1. Đọc hiểu diagram, phân tích xem cần thực hiện những chức năng gì
+2. Tạo db bằng code first
+3. Đăng ký tài khoản(khi đăng ký thì trạng thái của tài khoản sẽ là chưa kích hoạt => userstatus) => gửi mã xác thực về email.
+4. Chức năng xác thực đăng ký tài khoản
+5. Đăng nhập và xác thực người dùng
+6. Quên mật khẩu, tạo mật khẩu mới
+7. Đổi mật khẩu(không được truyền vào id của người dùng trong controller)
+8. lấy thông tin của tất cả người dùng, lấy thông tin người dùng theo id
+9. Hiển thị các bộ phim nổi bật(sắp xếp theo số lượng đặt vé)
+10. Thêm, sửa, xóa Cinema(Admin)
+11. Thêm, sửa, xóa Room(Admin)
+12. Thêm, sửa, xóa Seat(Admin)
+13. Thêm, sửa, xóa Food(Admin)
+14. Hiển thị phim theo rạp, phòng, trạng thái ghế trong phòng
+15. Thêm, sửa, xóa Movie
+16. Xử lý luồng sau:
+    "Chọn phim => Chọn rạp => Chọn phòng
+    => Chọn suất chiếu, đồ ăn => Tạo hóa đơn
+    => thanh toán VNPay
+    (dựa vào Promotion để tính giá tiền sau cùng)"
+    "CRUD Schedule - kiểm tra và đảm bảo là trong một phòng
+    không chiếu đồng thời 2 phim trong một khoảng thời gian giao nhau"
+    Sau khi thanh toán thì thông báo được gửi về email của người dùng
+
+17. Hoàn tất những công việc CRUD các bảng
+18. Thống kê doanh số của từng rạp theo khoảng thời gian(Admin)
+19. Quản lý thông tin của người dùng(Admin)
+20. Hoàn thiện backend về trang web đặt vé xem phim
